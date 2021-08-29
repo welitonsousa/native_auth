@@ -1,7 +1,8 @@
 name: native_auth
 description: Package for authenticate for faceID, touchID and FingerPrint
-version: 0.0.1
-homepage:
+version: 1.0.0
+author: Weliton Sousa <welitonubuntu@gmail.com>
+homepage: https://github.com/welitonsousa/native_auth
 
 environment:
   sdk: ">=2.12.0 <3.0.0"

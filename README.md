@@ -22,8 +22,8 @@ final response = await Auth.isAuthenticate();
 `response` it's an enum `authResponse` containing the statuses:
 #### `error`, `success` and `noAuth`
 
-`success` means the user is authenticated.
-`noAuth` means the user is no authenticated.
+`success` means the user is authenticated.<br>
+`noAuth` means the user is no authenticated.<br>
 `error` means that it was not possible to request any biometrics.
 
 
@@ -85,3 +85,7 @@ public class MainActivity extends FlutterFragmentActivity {
     }
 }
 ```
+
+<br>
+<br>
+this package is a abstration on plugin local_auth

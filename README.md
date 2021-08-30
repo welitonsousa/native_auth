@@ -3,7 +3,7 @@
 With this pack you can use the biometrics systems of Android and IOS devices.
 
 <br>
-will ask the user for the biometric authentication method of their device, which can be FaceID or TouchID on Iphone or FingerPrint on Android phones
+It will ask for the user which the biometric authentication method  of his device, this can be FaceID or TouchID on Iphone or  FingerPrint on Android phone
 
 ## Usage in Dart
 
@@ -19,13 +19,26 @@ import 'package:native_auth/native_auth.dart';
 final response = await Auth.isAuthenticate();
 ```
 
-`response` it's an enum `authResponse` containing the statuses:
-#### `error`, `success` and `noAuth`
+`response` is an enum `authResult` containing the statuses:
+#### `error`, `auth` and `noAuth`
 
-`success` means the user is authenticated.<br>
+`auth` means the user is authenticated.<br>
 `noAuth` means the user is no authenticated.<br>
 `error` means that it was not possible to request any biometrics.
 
+## 📱Screenshots
+
+<h3 align="center">🤖 Android</h3>
+<p align="center">
+    <img src="https://gitlab.com/welitonsousa/images/-/raw/main/android-waiting.png" width="270" height="500"/>
+    <img src="https://gitlab.com/welitonsousa/images/-/raw/main/android-success.png" width="270" height="500"/>
+</p>
+
+<h3 align="center">🍎 IOS</h3>
+<p align="center">
+    <img src="https://gitlab.com/welitonsousa/images/-/raw/main/ios-waiting.png" width="270" height="500"/>
+    <img src="https://gitlab.com/welitonsousa/images/-/raw/main/ios-success.png" width="270" height="500"/>
+</p>
 
 ## IOS Integration
 

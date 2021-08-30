@@ -1,1 +1,1 @@
-enum authResult { noAuth, error, success }
+enum authResult { auth, noAuth, error }

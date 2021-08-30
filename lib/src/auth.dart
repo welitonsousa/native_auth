@@ -1,4 +1,3 @@
-
 import 'dart:io';
 import 'package:local_auth/local_auth.dart';
 import 'package:native_auth/native_auth.dart';
@@ -22,17 +21,25 @@ class Auth {
     return result;
   }
 
-  static Future<authResult> isAuthenticate({AndroidMessage? androidMessage, IOSMessage? iosmessage}) async {
-    bool authenticate = false;
+  static Future<authResult> isAuthenticate({
+    AndroidMessage? androidMessage,
+    IOSMessage? iosmessage,
+  }) async {
+    bool auth = false;
 
     try {
-      if (Platform.isIOS)
-        authenticate = await Auth._iosAuth(iosmessage ?? IOSMessage());
-      if (Platform.isAndroid)
-          authenticate = await Auth._androidAuth(androidMessage ?? AndroidMessage(title: "Authentication", help: "user your password"),
+      if (Platform.isIOS) {
+        auth = await Auth._iosAuth(iosmessage ?? IOSMessage());
+      }
+      if (Platform.isAndroid) {
+        final patternMessage = AndroidMessage(
+          title: "Authentication",
+          help: "user your password",
         );
+        auth = await Auth._androidAuth(androidMessage ?? patternMessage);
+      }
 
-      if (authenticate) return authResult.success;
+      if (auth) return authResult.auth;
       return authResult.noAuth;
     } catch (e) {
       return authResult.error;

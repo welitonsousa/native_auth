@@ -6,6 +6,6 @@ class IOSMessage extends IOSAuthMessages {
 
   IOSMessage({String? help}) {
     this.message = IOSAuthMessages();
-    this.help = help?? "No message";
+    this.help = help ?? "No message";
   }
 }

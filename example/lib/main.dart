@@ -1,12 +1,15 @@
+import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:native_auth/native_auth.dart';
 
-void main() => runApp(MyApp());
+void main() => runApp(const MyApp());
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return const MaterialApp(
       title: 'Flutter Demo',
       home: HomePage(),
     );
@@ -14,18 +17,20 @@ class MyApp extends StatelessWidget {
 }
 
 class HomePage extends StatefulWidget {
+  const HomePage({super.key});
+
   @override
-  _HomePageState createState() => _HomePageState();
+  createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
-  String valueAuth = "No inialized";
+  String valueAuth = "No initialized";
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Auth")),
-      bottomNavigationBar: this.buttonAuth(),
+      appBar: AppBar(title: const Text("Auth")),
+      bottomNavigationBar: buttonAuth(),
       body: Center(child: Text(valueAuth)),
     );
   }
@@ -34,18 +39,16 @@ class _HomePageState extends State<HomePage> {
     return SafeArea(
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20),
-        child: ElevatedButton(
-          child: Text("Auth me"),
-          onPressed: this.auth
-        ),
+        child: ElevatedButton(onPressed: auth, child: const Text("Auth me")),
       ),
     );
   }
 
   Future<void> auth() async {
     final response = await Auth.isAuthenticate();
+    log('is authenticated: ${response.isAuthenticated}');
     setState(() {
-      this.valueAuth = response.toString();
+      valueAuth = response.toString();
     });
   }
 }

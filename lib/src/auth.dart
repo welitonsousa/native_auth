@@ -1,48 +1,41 @@
-import 'dart:io';
 import 'package:local_auth/local_auth.dart';
 import 'package:native_auth/native_auth.dart';
+import 'package:local_auth_android/local_auth_android.dart';
+import 'package:local_auth_ios/local_auth_ios.dart';
 
+/// the [Auth] class is used to authenticate the user.
 class Auth {
-  static final _auth = LocalAuthentication();
-
-  static Future<bool> _androidAuth(AndroidMessage androidMessage) async {
-    final result = await _auth.authenticate(
-      localizedReason: androidMessage.help,
-      androidAuthStrings: androidMessage.message,
-    );
-    return result;
-  }
-
-  static Future<bool> _iosAuth(IOSMessage iosMessage) async {
-    final result = await _auth.authenticate(
-      localizedReason: iosMessage.help,
-      iOSAuthStrings: iosMessage.message,
-    );
-    return result;
-  }
-
-  static Future<authResult> isAuthenticate({
-    AndroidMessage? androidMessage,
-    IOSMessage? iosmessage,
+  /// isAuthenticate is a method that returns a [Future] of [AuthResult].
+  ///
+  /// if the user is authenticated, it returns [AuthResult.auth].
+  ///
+  /// if the user has no authentication method, returns the param [noAuthMethodsReturn -> default auth].
+  ///
+  /// if the user is not authenticated, it returns [AuthResult.noAuth].
+  ///
+  /// if there is an error, it returns [AuthResult.error].
+  ///
+  static Future<AuthResult> isAuthenticate({
+    String description = 'Please authenticate to show account balance',
+    AuthResult noAuthMethodsReturn = AuthResult.auth,
+    String? title,
   }) async {
-    bool auth = false;
-
     try {
-      if (Platform.isIOS) {
-        auth = await Auth._iosAuth(iosmessage ?? IOSMessage());
-      }
-      if (Platform.isAndroid) {
-        final patternMessage = AndroidMessage(
-          title: "Authentication",
-          help: "user your password",
-        );
-        auth = await Auth._androidAuth(androidMessage ?? patternMessage);
-      }
+      final auth = LocalAuthentication();
+      final availableBiometrics = await auth.getAvailableBiometrics();
+      if (availableBiometrics.isEmpty) return noAuthMethodsReturn;
 
-      if (auth) return authResult.auth;
-      return authResult.noAuth;
+      final bool did = await auth.authenticate(
+        localizedReason: description,
+        authMessages: <AuthMessages>[
+          AndroidAuthMessages(signInTitle: title),
+          IOSAuthMessages(localizedFallbackTitle: title),
+        ],
+      );
+      if (did) return AuthResult.auth;
+      return AuthResult.noAuth;
     } catch (e) {
-      return authResult.error;
+      return AuthResult.error;
     }
   }
 }

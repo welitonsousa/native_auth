@@ -3,23 +3,19 @@
 With this pack you can use the biometrics systems of Android and IOS devices.
 
 <br>
-It will ask for the user which the biometric authentication method  of his device, this can be FaceID or TouchID on Iphone or  FingerPrint on Android phone
+It will ask for the user which the biometric authentication method  of his device, this can be FaceID or TouchID on IPhone or  FingerPrint on Android phone
 
-## Usage in Dart
 
-Import the relevant file:
-
-```dart
-import 'package:native_auth/native_auth.dart';
-```
 
 ## How to use
 
 ```dart
+import 'package:native_auth/native_auth.dart';
 final response = await Auth.isAuthenticate();
+print(response.isAuthenticated); // true or false
 ```
 
-`response` is an enum `authResult` containing the statuses:
+`response` is an enum `AuthResult` containing the statuses:
 #### `error`, `auth` and `noAuth`
 
 `auth` means the user is authenticated.<br>
@@ -59,21 +55,17 @@ Update your project's `AndroidManifest.xml` file to include the
 ```xml
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
  package="com.example.app">
-  <uses-permission android:name="android.permission.USE_FINGERPRINT"/>
+  <uses-permission android:name="android.permission.USE_BIOMETRIC"/>
 <manifest>
 ```
 
 Update your MainActivity.kt:
 
-```kotlin
+```java
 import io.flutter.embedding.android.FlutterFragmentActivity
-import io.flutter.embedding.engine.FlutterEngine
-import io.flutter.plugins.GeneratedPluginRegistrant
 
 class MainActivity: FlutterFragmentActivity() {
-    override fun configureFlutterEngine(flutterEngine: FlutterEngine) {
-        GeneratedPluginRegistrant.registerWith(flutterEngine)
-    }
+    // ...
 }
 ```
 
@@ -82,23 +74,16 @@ OR
 Update your MainActivity.java:
 
 ```java
-import android.os.Bundle;
-import io.flutter.app.FlutterFragmentActivity;
-import io.flutter.plugins.flutter_plugin_android_lifecycle.FlutterAndroidLifecyclePlugin;
-import io.flutter.plugins.localauth.LocalAuthPlugin;
+import io.flutter.embedding.android.FlutterFragmentActivity;
 
 public class MainActivity extends FlutterFragmentActivity {
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        FlutterAndroidLifecyclePlugin.registerWith(
-                registrarFor(
-                        "io.flutter.plugins.flutter_plugin_android_lifecycle.FlutterAndroidLifecyclePlugin"));
-        LocalAuthPlugin.registerWith(registrarFor("io.flutter.plugins.localauth.LocalAuthPlugin"));
-    }
+    // ...
 }
 ```
+to inherit `FlutterActivity` from `FlutterFragmentActivity`
 
 <br>
-<br>
-this package is a abstration on plugin local_auth
+
+<p align="center">
+   Feito com ❤️ by <a target="_blank" href="https://welitonsousa.github.io"><b>Weliton Sousa</b></a>
+</p>
